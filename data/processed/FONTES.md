@@ -15,7 +15,10 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 | `desmatamento_AAAA.geojson` | Desmatamento | MapBiomas (Alerta) | — | — | Um arquivo por ano |
 | `area_urbana.geojson` | Área Urbana | _(preencher)_ | — | — | |
 | `fauna_atropelada.json` | Fauna Atropelada | Cadastro SEMMA / fiscalização | — | — | |
-| `licenciamento.json` | Licenças Emitidas | SEMMA | — | — | |
+| `licenciamento.json` | Licenças Emitidas (histórico anual) | SEMMA | — | — | |
+| `licenciamento_pontos.geojson` | Licenciamento Ambiental — pontos | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadopt.geojson` |
+| `licenciamento_areas.geojson` | Licenciamento Ambiental — áreas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadoplg.geojson` |
+| `licenciamento_linhas.geojson` | Licenciamento Ambiental — linhas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadolinha.geojson` |
 | `autos_infracao.json` | Autos de Infração | SEMMA / fiscalização | — | — | |
 | `cobertura_vegetal.json` | Cobertura Vegetal Nativa (%) | MapBiomas (Coleção de Cobertura e Uso) | — | — | |
 

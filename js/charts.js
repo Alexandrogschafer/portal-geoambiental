@@ -23,7 +23,8 @@ const CHART_COLORS = {
 
 async function fetchIndicatorData(jsonFile) {
   try {
-    const res = await fetch(`data/processed/${jsonFile}`);
+    const base = window.SEMMA_BASE_PATH || '';
+    const res = await fetch(`${base}data/processed/${jsonFile}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (err) {
