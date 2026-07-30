@@ -81,10 +81,23 @@ function addLineOrPolygonLayer(geojson, group, style, popupFields) {
   }).addTo(group);
 }
 
+// Nomes de coluna crus (ex.: vindos de shapefile) -> rótulo amigável no popup.
+// Campos sem entrada aqui exibem a própria chave como rótulo.
+const FIELD_LABELS = {
+  HIDRO: 'Tipo',
+  COMP_KM: 'Comprimento (km)',
+  nome_uc: 'Nome',
+  categoria: 'Categoria',
+  ANODETEC: 'Ano de detecção',
+  AREAHA: 'Área (ha)',
+  ano: 'Ano',
+  area_ha: 'Área (ha)',
+};
+
 function buildPopup(props, fields) {
   const rows = (fields || Object.keys(props))
     .filter((f) => props[f] !== undefined)
-    .map((f) => `<tr><td style="padding-right:8px;color:#7c877e;">${f}</td><td><strong>${props[f]}</strong></td></tr>`)
+    .map((f) => `<tr><td style="padding-right:8px;color:#7c877e;">${FIELD_LABELS[f] || f}</td><td><strong>${props[f]}</strong></td></tr>`)
     .join('');
   return `<table style="font-size:12.5px;">${rows}</table>`;
 }
@@ -107,9 +120,9 @@ async function initLayers() {
   ]);
 
   if (limite) addLineOrPolygonLayer(limite, layerGroups.limite, LAYER_STYLES.limite);
-  if (hidrografia) addLineOrPolygonLayer(hidrografia, layerGroups.hidrografia, LAYER_STYLES.hidrografia, ['nome']);
-  if (nascentes) addPointLayer(nascentes, layerGroups.nascentes, POINT_COLOR_NASCENTES, ['nome', 'situacao']);
-  if (ucs) addLineOrPolygonLayer(ucs, layerGroups.ucs, LAYER_STYLES.ucs, ['nome', 'categoria']);
+  if (hidrografia) addLineOrPolygonLayer(hidrografia, layerGroups.hidrografia, LAYER_STYLES.hidrografia, ['HIDRO', 'COMP_KM']);
+  if (nascentes) addPointLayer(nascentes, layerGroups.nascentes, POINT_COLOR_NASCENTES, ['HIDRO']);
+  if (ucs) addLineOrPolygonLayer(ucs, layerGroups.ucs, LAYER_STYLES.ucs, ['nome_uc', 'categoria']);
   if (apps) addLineOrPolygonLayer(apps, layerGroups.apps, LAYER_STYLES.apps);
   if (urbana) addLineOrPolygonLayer(urbana, layerGroups.urbana, LAYER_STYLES.urbana);
 
@@ -125,7 +138,7 @@ async function initLayers() {
   for (let ano = anoAtual; ano >= anoAtual - 5; ano--) {
     const desmatamento = await fetchGeoJSON(`desmatamento_${ano}.geojson`);
     if (desmatamento) {
-      addLineOrPolygonLayer(desmatamento, layerGroups.desmatamento, LAYER_STYLES.desmatamento, ['ano', 'area_ha']);
+      addLineOrPolygonLayer(desmatamento, layerGroups.desmatamento, LAYER_STYLES.desmatamento, ['ANODETEC', 'AREAHA']);
       break;
     }
   }
