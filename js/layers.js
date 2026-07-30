@@ -1,44 +1,85 @@
 /**
  * layers.js
- * Carregamento e controle (toggle) das camadas GeoJSON do mapa.
+ * Configuração e carregamento das camadas GeoJSON do "painel de Camadas"
+ * (ver CLAUDE.md > "Convenção de camadas do mapa").
  *
- * Convenção (ver CLAUDE.md > "Convenção de camadas do mapa"):
- *   Camada                    | Geometria       | Cor        | Arquivo
- *   Limite Municipal          | linha           | branco     | limite_municipal.geojson
- *   Hidrografia               | linha           | #2f7fb0    | hidrografia.geojson
- *   Nascentes                 | ponto           | #5fb0e0    | nascentes.geojson
- *   Unidades de Conservação   | polígono        | #6fb178    | unidades_conservacao.geojson
- *   Queimadas                 | polígono        | #c96a3c    | queimadas_AAAA.geojson
- *   Desmatamento              | polígono        | #8a5a3c    | desmatamento_AAAA.geojson
- *   APPs                      | polígono        | #c99a3c    | apps.geojson
- *   Área Urbana               | polígono        | cinza      | area_urbana.geojson
+ * LAYER_CONFIG é a fonte única de verdade (arquivo, estilo, campos de
+ * popup) para cada camada — reaproveitada tanto pelo mapa geral
+ * (index.html, todas as camadas com toggle, via initLayers()) quanto
+ * pelas páginas individuais em mapas/*.html (uma camada só, sem toggle,
+ * via initSingleLayerPage()). Qual caminho roda é decidido sozinho no
+ * DOMContentLoaded no fim do arquivo, olhando o que existe na página.
  */
 
-const DATA_DIR = 'data/processed/';
+const DATA_DIR = `${window.SEMMA_BASE_PATH || ''}data/processed/`;
 
-const LAYER_STYLES = {
-  limite:        { color: '#ffffff', weight: 2, dashArray: '4 3', fillOpacity: 0 },
-  hidrografia:   { color: '#2f7fb0', weight: 1.5 },
-  ucs:           { color: '#6fb178', weight: 1, fillColor: '#6fb178', fillOpacity: 0.35 },
-  apps:          { color: '#c99a3c', weight: 1, fillColor: '#c99a3c', fillOpacity: 0.3 },
-  queimadas:     { color: '#c96a3c', weight: 1, fillColor: '#c96a3c', fillOpacity: 0.45 },
-  desmatamento:  { color: '#e63946', weight: 1, fillColor: '#e63946', fillOpacity: 0.45 },
-  urbana:        { color: '#7c877e', weight: 1, fillColor: '#7c877e', fillOpacity: 0.25 },
+// Nomes de coluna crus (ex.: vindos de shapefile) -> rótulo amigável no popup.
+// Campos sem entrada aqui exibem a própria chave como rótulo.
+const FIELD_LABELS = {
+  HIDRO: 'Tipo',
+  COMP_KM: 'Comprimento (km)',
+  nome_uc: 'Nome',
+  categoria: 'Categoria',
+  ANODETEC: 'Ano de detecção',
+  AREAHA: 'Área (ha)',
+  ano: 'Ano',
+  area_ha: 'Área (ha)',
 };
 
-const POINT_COLOR_NASCENTES = '#5fb0e0';
-
-// Grupos de camadas — populados assincronamente ao carregar os GeoJSON
-const layerGroups = {
-  limite: L.layerGroup(),
-  hidrografia: L.layerGroup(),
-  nascentes: L.layerGroup(),
-  ucs: L.layerGroup(),
-  apps: L.layerGroup(),
-  queimadas: L.layerGroup(),
-  desmatamento: L.layerGroup(),
-  urbana: L.layerGroup(),
+const LAYER_CONFIG = {
+  limite: {
+    file: 'limite_municipal.geojson',
+    type: 'line',
+    style: { color: '#ffffff', weight: 2, dashArray: '4 3', fillOpacity: 0 },
+  },
+  hidrografia: {
+    file: 'hidrografia.geojson',
+    type: 'line',
+    style: { color: '#2f7fb0', weight: 1.5 },
+    popupFields: ['HIDRO', 'COMP_KM'],
+  },
+  nascentes: {
+    file: 'nascentes.geojson',
+    type: 'point',
+    pointColor: '#5fb0e0',
+    popupFields: ['HIDRO'],
+  },
+  ucs: {
+    file: 'unidades_conservacao.geojson',
+    type: 'polygon',
+    style: { color: '#6fb178', weight: 1, fillColor: '#6fb178', fillOpacity: 0.35 },
+    popupFields: ['nome_uc', 'categoria'],
+  },
+  apps: {
+    file: 'apps.geojson',
+    type: 'polygon',
+    style: { color: '#c99a3c', weight: 1, fillColor: '#c99a3c', fillOpacity: 0.3 },
+  },
+  queimadas: {
+    fileTemplate: 'queimadas_{ano}.geojson',
+    type: 'polygon',
+    style: { color: '#c96a3c', weight: 1, fillColor: '#c96a3c', fillOpacity: 0.45 },
+    popupFields: ['ano', 'area_ha'],
+  },
+  desmatamento: {
+    fileTemplate: 'desmatamento_{ano}.geojson',
+    type: 'polygon',
+    style: { color: '#e63946', weight: 1, fillColor: '#e63946', fillOpacity: 0.45 },
+    popupFields: ['ANODETEC', 'AREAHA'],
+  },
+  urbana: {
+    file: 'area_urbana.geojson',
+    type: 'polygon',
+    style: { color: '#7c877e', weight: 1, fillColor: '#7c877e', fillOpacity: 0.25 },
+  },
 };
+
+// Grupos de camadas — populados assincronamente ao carregar os GeoJSON.
+// L.featureGroup() (não layerGroup()) porque as páginas individuais
+// precisam de .getBounds() para o fit automático.
+const layerGroups = Object.fromEntries(
+  Object.keys(LAYER_CONFIG).map((key) => [key, L.featureGroup()])
+);
 
 /**
  * Busca um GeoJSON em data/processed/. Retorna null (com aviso no console)
@@ -56,43 +97,23 @@ async function fetchGeoJSON(filename) {
   }
 }
 
-function addPointLayer(geojson, group, color, popupFields) {
-  L.geoJSON(geojson, {
-    pointToLayer: (feature, latlng) =>
-      L.circleMarker(latlng, {
-        radius: 6,
-        color: '#fff',
-        weight: 1,
-        fillColor: color,
-        fillOpacity: 0.9,
-      }),
-    onEachFeature: (feature, layer) => {
-      if (feature.properties) layer.bindPopup(buildPopup(feature.properties, popupFields));
-    },
-  }).addTo(group);
+// Camadas anuais (queimadas / desmatamento): tenta do ano atual pra trás,
+// usa só o ano mais recente disponível para não pesar o mapa.
+async function fetchLatestAnnualGeoJSON(fileTemplate) {
+  const anoAtual = new Date().getFullYear();
+  for (let ano = anoAtual; ano >= anoAtual - 5; ano--) {
+    const geojson = await fetchGeoJSON(fileTemplate.replace('{ano}', ano));
+    if (geojson) return geojson;
+  }
+  return null;
 }
 
-function addLineOrPolygonLayer(geojson, group, style, popupFields) {
-  L.geoJSON(geojson, {
-    style,
-    onEachFeature: (feature, layer) => {
-      if (feature.properties) layer.bindPopup(buildPopup(feature.properties, popupFields));
-    },
-  }).addTo(group);
+function fetchLayerData(key) {
+  const config = LAYER_CONFIG[key];
+  return config.fileTemplate
+    ? fetchLatestAnnualGeoJSON(config.fileTemplate)
+    : fetchGeoJSON(config.file);
 }
-
-// Nomes de coluna crus (ex.: vindos de shapefile) -> rótulo amigável no popup.
-// Campos sem entrada aqui exibem a própria chave como rótulo.
-const FIELD_LABELS = {
-  HIDRO: 'Tipo',
-  COMP_KM: 'Comprimento (km)',
-  nome_uc: 'Nome',
-  categoria: 'Categoria',
-  ANODETEC: 'Ano de detecção',
-  AREAHA: 'Área (ha)',
-  ano: 'Ano',
-  area_ha: 'Área (ha)',
-};
 
 function buildPopup(props, fields) {
   const rows = (fields || Object.keys(props))
@@ -102,46 +123,37 @@ function buildPopup(props, fields) {
   return `<table style="font-size:12.5px;">${rows}</table>`;
 }
 
+function addConfiguredLayer(key, geojson, group) {
+  const config = LAYER_CONFIG[key];
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties) layer.bindPopup(buildPopup(feature.properties, config.popupFields));
+  };
+
+  if (config.type === 'point') {
+    L.geoJSON(geojson, {
+      pointToLayer: (feature, latlng) =>
+        L.circleMarker(latlng, {
+          radius: 6, color: '#fff', weight: 1, fillColor: config.pointColor, fillOpacity: 0.9,
+        }),
+      onEachFeature,
+    }).addTo(group);
+  } else {
+    L.geoJSON(geojson, { style: config.style, onEachFeature }).addTo(group);
+  }
+}
+
 /**
- * Carrega todas as camadas configuradas. Cada camada falha de forma
- * independente e silenciosa (log em console) caso o arquivo não exista
- * ainda em data/processed/.
+ * Carrega todas as camadas configuradas (mapa geral, index.html). Cada
+ * camada falha de forma independente e silenciosa (log em console) caso
+ * o arquivo não exista ainda em data/processed/.
  */
 async function initLayers() {
-  const [
-    limite, hidrografia, nascentes, ucs, apps, urbana,
-  ] = await Promise.all([
-    fetchGeoJSON('limite_municipal.geojson'),
-    fetchGeoJSON('hidrografia.geojson'),
-    fetchGeoJSON('nascentes.geojson'),
-    fetchGeoJSON('unidades_conservacao.geojson'),
-    fetchGeoJSON('apps.geojson'),
-    fetchGeoJSON('area_urbana.geojson'),
-  ]);
+  const keys = Object.keys(LAYER_CONFIG);
+  const geojsons = await Promise.all(keys.map((key) => fetchLayerData(key)));
 
-  if (limite) addLineOrPolygonLayer(limite, layerGroups.limite, LAYER_STYLES.limite);
-  if (hidrografia) addLineOrPolygonLayer(hidrografia, layerGroups.hidrografia, LAYER_STYLES.hidrografia, ['HIDRO', 'COMP_KM']);
-  if (nascentes) addPointLayer(nascentes, layerGroups.nascentes, POINT_COLOR_NASCENTES, ['HIDRO']);
-  if (ucs) addLineOrPolygonLayer(ucs, layerGroups.ucs, LAYER_STYLES.ucs, ['nome_uc', 'categoria']);
-  if (apps) addLineOrPolygonLayer(apps, layerGroups.apps, LAYER_STYLES.apps);
-  if (urbana) addLineOrPolygonLayer(urbana, layerGroups.urbana, LAYER_STYLES.urbana);
-
-  // Camadas anuais (queimadas / desmatamento) — carrega ano mais recente por padrão
-  const anoAtual = new Date().getFullYear();
-  for (let ano = anoAtual; ano >= anoAtual - 5; ano--) {
-    const queimadas = await fetchGeoJSON(`queimadas_${ano}.geojson`);
-    if (queimadas) {
-      addLineOrPolygonLayer(queimadas, layerGroups.queimadas, LAYER_STYLES.queimadas, ['ano', 'area_ha']);
-      break; // usa só o ano mais recente disponível para não pesar o mapa
-    }
-  }
-  for (let ano = anoAtual; ano >= anoAtual - 5; ano--) {
-    const desmatamento = await fetchGeoJSON(`desmatamento_${ano}.geojson`);
-    if (desmatamento) {
-      addLineOrPolygonLayer(desmatamento, layerGroups.desmatamento, LAYER_STYLES.desmatamento, ['ANODETEC', 'AREAHA']);
-      break;
-    }
-  }
+  keys.forEach((key, i) => {
+    if (geojsons[i]) addConfiguredLayer(key, geojsons[i], layerGroups[key]);
+  });
 
   // Camadas visíveis por padrão (conforme protótipo): limite, hidrografia, nascentes, UCs
   layerGroups.limite.addTo(map);
@@ -150,6 +162,7 @@ async function initLayers() {
   layerGroups.ucs.addTo(map);
 
   // Ajusta o zoom ao limite municipal, se disponível
+  const limite = geojsons[keys.indexOf('limite')];
   if (limite) {
     try {
       const bounds = L.geoJSON(limite).getBounds();
@@ -158,7 +171,7 @@ async function initLayers() {
   }
 }
 
-// ---- Toggle das checkboxes do painel "Camadas" ----
+// ---- Toggle das checkboxes do painel "Camadas" (mapa geral) ----
 function bindLayerToggle(checkboxId, groupKey) {
   const el = document.getElementById(checkboxId);
   if (!el) return;
@@ -171,15 +184,43 @@ function bindLayerToggle(checkboxId, groupKey) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initLayers();
+/**
+ * Carrega uma única camada (páginas individuais em mapas/*.html, sem
+ * toggle). Ajusta o zoom à extensão da própria camada; se ela não tiver
+ * feições (ainda não processada, ou filtro vazio), cai para o limite
+ * municipal como contexto — o limite em si não é desenhado no mapa.
+ */
+async function initSingleLayerPage(key) {
+  const group = layerGroups[key];
+  const [limite, geojson] = await Promise.all([
+    fetchGeoJSON('limite_municipal.geojson'),
+    fetchLayerData(key),
+  ]);
 
-  bindLayerToggle('layer-limite', 'limite');
-  bindLayerToggle('layer-hidrografia', 'hidrografia');
-  bindLayerToggle('layer-nascentes', 'nascentes');
-  bindLayerToggle('layer-ucs', 'ucs');
-  bindLayerToggle('layer-apps', 'apps');
-  bindLayerToggle('layer-queimadas', 'queimadas');
-  bindLayerToggle('layer-desmatamento', 'desmatamento');
-  bindLayerToggle('layer-urbana', 'urbana');
+  if (geojson) addConfiguredLayer(key, geojson, group);
+  group.addTo(map);
+
+  let bounds = group.getBounds();
+  if (!bounds.isValid() && limite) {
+    bounds = L.geoJSON(limite).getBounds();
+  }
+  if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('layer-limite')) {
+    // Mapa geral (index.html): todas as camadas, com toggle.
+    initLayers();
+    bindLayerToggle('layer-limite', 'limite');
+    bindLayerToggle('layer-hidrografia', 'hidrografia');
+    bindLayerToggle('layer-nascentes', 'nascentes');
+    bindLayerToggle('layer-ucs', 'ucs');
+    bindLayerToggle('layer-apps', 'apps');
+    bindLayerToggle('layer-queimadas', 'queimadas');
+    bindLayerToggle('layer-desmatamento', 'desmatamento');
+    bindLayerToggle('layer-urbana', 'urbana');
+  } else if (document.body.dataset.layerKey) {
+    // Página individual (mapas/*.html): uma camada só.
+    initSingleLayerPage(document.body.dataset.layerKey);
+  }
 });
