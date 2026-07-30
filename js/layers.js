@@ -22,7 +22,7 @@ const LAYER_STYLES = {
   ucs:           { color: '#6fb178', weight: 1, fillColor: '#6fb178', fillOpacity: 0.35 },
   apps:          { color: '#c99a3c', weight: 1, fillColor: '#c99a3c', fillOpacity: 0.3 },
   queimadas:     { color: '#c96a3c', weight: 1, fillColor: '#c96a3c', fillOpacity: 0.45 },
-  desmatamento:  { color: '#8a5a3c', weight: 1, fillColor: '#8a5a3c', fillOpacity: 0.45 },
+  desmatamento:  { color: '#e63946', weight: 1, fillColor: '#e63946', fillOpacity: 0.45 },
   urbana:        { color: '#7c877e', weight: 1, fillColor: '#7c877e', fillOpacity: 0.25 },
 };
 

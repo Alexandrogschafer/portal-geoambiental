@@ -19,7 +19,8 @@
   --water: #2f7fb0;       /* hidrografia / nascentes (base) */
   --water-light: #5fb0e0; /* nascentes */
   --fire: #c96a3c;        /* queimadas */
-  --soil: #8a5a3c;        /* desmatamento */
+  --soil: #8a5a3c;        /* fauna atropelada */
+  --deforest: #e63946;    /* desmatamento */
   --amber: #c99a3c;       /* licenciamento / autos / APPs */
   --violet: #7a5ea8;      /* indicadores institucionais */
   --conservation: #6fb178;/* unidades de conservação */

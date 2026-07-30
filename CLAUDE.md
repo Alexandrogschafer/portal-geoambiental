@@ -54,7 +54,7 @@ Cada camada no painel "Camadas" segue este padrão:
 | Nascentes | ponto | azul claro `#5fb0e0` | `nascentes.geojson` |
 | Unidades de Conservação | polígono | verde `#6fb178` | `unidades_conservacao.geojson` |
 | Queimadas | polígono/heatmap | terracota `#c96a3c` | `queimadas_AAAA.geojson` (um por ano, se aplicável) |
-| Desmatamento | polígono | marrom `#8a5a3c` | `desmatamento_AAAA.geojson` |
+| Desmatamento | polígono | vermelho `#e63946` | `desmatamento_AAAA.geojson` |
 | APPs | polígono | amarelo `#c99a3c` | `apps.geojson` |
 | Área Urbana | polígono | cinza | `area_urbana.geojson` |
 
