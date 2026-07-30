@@ -1,0 +1,11 @@
+# Dados brutos (shapefiles) — não versionar se forem grandes/sensíveis
+data/raw/*
+!data/raw/.gitkeep
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

@@ -1,0 +1,11 @@
+{
+  "descricao": "Registros de fauna atropelada por ano",
+  "fonte": "Cadastro SEMMA / fiscalização",
+  "registros_por_ano": [
+    { "ano": 2024, "valor": 128, "fonte": "SEMMA" },
+    { "ano": 2025, "valor": 141, "fonte": "SEMMA" },
+    { "ano": 2026, "valor": 43, "fonte": "SEMMA" }
+  ],
+  "total_periodo": 312,
+  "periodo": "2024-2026"
+}

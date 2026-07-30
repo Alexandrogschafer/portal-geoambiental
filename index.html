@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Geoambiental — Alto Paraíso de Goiás (SEMMA)</title>
+<meta name="description" content="Portal Geoambiental da Secretaria Municipal de Meio Ambiente de Alto Paraíso de Goiás - GO. Mapas interativos e indicadores ambientais.">
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo-placeholder"></div>
+      <div>
+        <strong>SEMMA</strong>
+        <span>SECRETARIA MUNICIPAL DE<br>MEIO AMBIENTE<br>ALTO PARAÍSO DE GOIÁS</span>
+      </div>
+    </div>
+
+    <a class="nav-item active" href="index.html">
+      <i class="fa-solid fa-house"></i> Início
+    </a>
+
+    <details class="nav-group" open>
+      <summary class="nav-section-title">
+        <i class="fa-solid fa-map"></i> MAPAS INTERATIVOS
+      </summary>
+      <a class="nav-item active" href="index.html"><i class="fa-solid fa-earth-americas"></i> Mapa Geral</a>
+      <a class="nav-item" href="mapas/hidrografia.html"><i class="fa-solid fa-water"></i> Hidrografia</a>
+      <a class="nav-item" href="mapas/nascentes.html"><i class="fa-solid fa-droplet"></i> Nascentes</a>
+      <a class="nav-item" href="mapas/unidades-conservacao.html"><i class="fa-solid fa-seedling"></i> Unidades de Conservação</a>
+      <a class="nav-item" href="mapas/queimadas.html"><i class="fa-solid fa-fire"></i> Queimadas</a>
+      <a class="nav-item" href="mapas/desmatamento.html"><i class="fa-solid fa-tree"></i> Desmatamento</a>
+      <a class="nav-item" href="mapas/fauna-atropelada.html"><i class="fa-solid fa-paw"></i> Fauna Atropelada</a>
+      <a class="nav-item" href="mapas/licenciamento.html"><i class="fa-solid fa-file-lines"></i> Licenciamento Ambiental</a>
+      <a class="nav-item" href="mapas/autos-infracao.html"><i class="fa-solid fa-gavel"></i> Autos de Infração</a>
+      <a class="nav-item" href="mapas/supressao.html"><i class="fa-solid fa-scissors"></i> Autorizações de Supressão</a>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-chart-simple"></i> INDICADORES AMBIENTAIS</summary>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-database"></i> BANCO DE DADOS</summary>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-magnifying-glass"></i> FISCALIZAÇÃO AMBIENTAL</summary>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-leaf"></i> CONSERVAÇÃO AMBIENTAL</summary>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-book"></i> BIBLIOTECA TÉCNICA</summary>
+    </details>
+
+    <details class="nav-group">
+      <summary class="nav-section-title"><i class="fa-solid fa-circle-question"></i> SOBRE A PLATAFORMA</summary>
+    </details>
+  </aside>
+
+  <!-- ===================== CONTEÚDO ===================== -->
+  <main class="main">
+
+    <div class="topbar">
+      <div style="width:120px;"></div>
+      <div class="titles">
+        <h1>Portal Geoambiental</h1>
+        <div class="subtitle">Alto Paraíso de Goiás - GO</div>
+        <div class="tagline">Informação, Transparência e Tecnologia a serviço da Gestão Ambiental</div>
+      </div>
+      <div class="actions">
+        <button class="btn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+        <button class="btn"><i class="fa-solid fa-circle-question"></i> Ajuda</button>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Bem-vindo ao Portal Geoambiental de Alto Paraíso de Goiás</h2>
+        <p>
+          Esta plataforma integra dados ambientais, territoriais e indicadores para apoiar
+          a gestão pública, fortalecer a fiscalização, subsidiar o planejamento ambiental e
+          promover o acesso da população às informações ambientais do município.
+        </p>
+        <div class="mission">
+          <i class="fa-solid fa-hand-holding-heart" style="color: var(--forest-600); font-size:20px;"></i>
+          <div>
+            <strong>Nossa missão</strong>
+            <p>Promover a conservação dos recursos naturais, o uso sustentável do território
+              e a qualidade ambiental das presentes e futuras gerações.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image" style="background-image:url('assets/img/hero-cachoeira.jpg');"></div>
+    </section>
+
+    <!-- Mapa + Indicadores -->
+    <div class="map-section-title"><i class="fa-solid fa-map-location-dot"></i> MAPA INTERATIVO</div>
+
+    <div class="content-grid">
+
+      <!-- Mapa -->
+      <div class="map-card" style="position:relative;">
+        <div id="map"></div>
+
+        <div class="layers-panel">
+          <h4><i class="fa-solid fa-layer-group"></i> Camadas</h4>
+          <label><input type="checkbox" id="layer-limite" checked> Limite Municipal</label>
+          <label><input type="checkbox" id="layer-hidrografia" checked> Hidrografia</label>
+          <label><input type="checkbox" id="layer-nascentes" checked> Nascentes</label>
+          <label><input type="checkbox" id="layer-ucs" checked> Unidades de Conservação</label>
+          <label><input type="checkbox" id="layer-apps"> APPs</label>
+          <label><input type="checkbox" id="layer-queimadas"> Queimadas (MapBiomas)</label>
+          <label><input type="checkbox" id="layer-desmatamento"> Desmatamento (MapBiomas)</label>
+          <label><input type="checkbox" id="layer-urbana"> Área Urbana</label>
+        </div>
+      </div>
+
+      <!-- Indicadores -->
+      <aside class="indicators">
+        <div class="indicator-card">
+          <div class="icon bg-forest"><i class="fa-solid fa-tree"></i></div>
+          <div>
+            <div class="value" id="ind-cobertura">75,3%</div>
+            <div class="label">Cobertura Vegetal Nativa</div>
+            <div class="meta">do território municipal</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-fire"><i class="fa-solid fa-fire"></i></div>
+          <div>
+            <div class="value" id="ind-queimadas">18.742 ha</div>
+            <div class="label">Áreas Queimadas (2024)</div>
+            <div class="meta">Fonte: MapBiomas</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-water"><i class="fa-solid fa-droplet"></i></div>
+          <div>
+            <div class="value" id="ind-nascentes">1.248</div>
+            <div class="label">Nascentes Cadastradas</div>
+            <div class="meta">nascentes</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-conservation"><i class="fa-solid fa-seedling"></i></div>
+          <div>
+            <div class="value" id="ind-ucs">22</div>
+            <div class="label">Unidades de Conservação</div>
+            <div class="meta">unidades</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-soil"><i class="fa-solid fa-paw"></i></div>
+          <div>
+            <div class="value" id="ind-fauna">312</div>
+            <div class="label">Fauna Atropelada (2024-2026)</div>
+            <div class="meta">registros</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-amber"><i class="fa-solid fa-file-lines"></i></div>
+          <div>
+            <div class="value" id="ind-licencas">186</div>
+            <div class="label">Licenças Emitidas (2024)</div>
+            <div class="meta">licenças</div>
+          </div>
+        </div>
+        <div class="indicator-card">
+          <div class="icon bg-violet"><i class="fa-solid fa-gavel"></i></div>
+          <div>
+            <div class="value" id="ind-autos">47</div>
+            <div class="label">Autos de Infração (2024)</div>
+            <div class="meta">autos</div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- Créditos -->
+    <div class="footer-credits">
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Realização</div>
+          <strong>SEMMA</strong>
+          <span>Secretaria Municipal de Meio Ambiente<br>Alto Paraíso de Goiás</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Idealização e Criação</div>
+          <strong>Nayara Sousa</strong>
+          <span>Bióloga | Fiscal Ambiental<br>Especialista em Geoprocessamento</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Em parceria com</div>
+          <strong>UFABC</strong>
+          <span>Universidade Federal do ABC</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Representada por</div>
+          <strong>Prof. Alexandro Schäfer</strong>
+          <span>Orientador — UFABC</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="bottom-bar">
+  <span><i class="fa-solid fa-circle-info"></i> Tecnologia e dados para uma gestão ambiental mais eficiente, participativa e sustentável.</span>
+  <span>© 2026 SEMMA – Alto Paraíso de Goiás</span>
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="js/map-core.js"></script>
+<script src="js/layers.js"></script>
+<script src="js/charts.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "descricao": "Autos de infração ambiental lavrados por ano",
+  "fonte": "SEMMA / fiscalização",
+  "por_ano": [
+    { "ano": 2024, "valor": 47, "fonte": "SEMMA" }
+  ]
+}

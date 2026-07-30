@@ -1,0 +1,7 @@
+{
+  "descricao": "Licenças ambientais emitidas por ano",
+  "fonte": "SEMMA",
+  "por_ano": [
+    { "ano": 2024, "valor": 186, "fonte": "SEMMA" }
+  ]
+}
