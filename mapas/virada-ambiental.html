@@ -107,17 +107,5 @@
 <script src="../js/map-core.js"></script>
 <script src="../js/layers.js"></script>
 <script src="../js/partials.js"></script>
-<script>
-  // Camada ainda não processada: sem data-layer-key/data-layer-keys, então
-  // layers.js não tenta carregar nada aqui — só desenhamos o limite
-  // municipal como referência visual (o aviso acima já deixa claro, de
-  // forma visível, que os dados estão em levantamento).
-  document.addEventListener('DOMContentLoaded', async () => {
-    const limite = await fetchGeoJSON('limite_municipal.geojson');
-    if (!limite) return;
-    const bounds = L.geoJSON(limite, { style: LAYER_CONFIG.limite.style }).addTo(map).getBounds();
-    if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
-  });
-</script>
 </body>
 </html>

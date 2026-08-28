@@ -37,6 +37,15 @@ async function fetchLicenciamentoGeoJSON(filename) {
   }
 }
 
+// Contorno municipal como referência visual — desenhado à parte (sem
+// entrar no fitBounds abaixo, que deve continuar ajustando o zoom às
+// feições de licenciamento, não ao município inteiro).
+async function drawLicenciamentoLimite() {
+  const limite = await fetchLicenciamentoGeoJSON('limite_municipal.geojson');
+  if (!limite) return;
+  L.geoJSON(limite, { style: { color: '#ffffff', weight: 3, dashArray: '5 4', fillOpacity: 0 } }).addTo(map);
+}
+
 function buildLicenciamentoPopup(props) {
   const rows = Object.entries(LIC_POPUP_LABELS)
     .filter(([key]) => props[key] !== undefined && props[key] !== null)
@@ -71,7 +80,7 @@ async function initLicenciamentoLayers() {
 
   if (areas) {
     L.geoJSON(areas, {
-      style: { color: LIC_COLOR, weight: 1, fillColor: LIC_COLOR, fillOpacity: 0.35 },
+      style: { color: '#ffffff', weight: 2.5, fillColor: LIC_COLOR, fillOpacity: 0.45 },
       onEachFeature: onEachLicenciamentoFeature,
     }).addTo(licenciamentoGroups.areas);
   }
@@ -108,6 +117,7 @@ function bindLicenciamentoToggle(checkboxId, groupKey) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initLicenciamentoLayers();
+  drawLicenciamentoLimite();
 
   bindLicenciamentoToggle('layer-lic-pontos', 'pontos');
   bindLicenciamentoToggle('layer-lic-areas', 'areas');
