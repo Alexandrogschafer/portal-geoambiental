@@ -8,7 +8,7 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 |---|---|---|---|---|---|
 | `limite_municipal.geojson` | Limite Municipal | _(preencher — ex. IBGE, malha municipal)_ | — | — | Soft-hyphen solto removido do campo `Nome` via `scripts/fix_encoding_mojibake.py` |
 | `hidrografia.geojson` | Hidrografia | _(preencher)_ | — | — | |
-| `nascentes.geojson` | Nascentes | Cadastro SEMMA | — | — | Encoding (mojibake) corrigido via `scripts/fix_encoding_mojibake.py` — raw já vinha corrompido |
+| `nascentes.geojson` | Nascentes | Cadastro SEMMA | — | — | Encoding (mojibake) corrigido via `scripts/fix_encoding_mojibake.py` — raw já vinha corrompido. Sem página própria: carregada como sub-camada dentro de `mapas/hidrografia.html` |
 | `unidades_conservacao.geojson` | Unidades de Conservação | _(preencher)_ | — | — | Encoding (mojibake) corrigido via `scripts/fix_encoding_mojibake.py` — raw já vinha corrompido |
 | `apps.geojson` | APPs | _(preencher)_ | — | — | |
 | `queimadas_AAAA.geojson` | Queimadas | MapBiomas (Coleção Fogo) | — | — | Um arquivo por ano |

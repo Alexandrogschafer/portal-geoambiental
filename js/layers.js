@@ -207,6 +207,31 @@ async function initSingleLayerPage(key) {
   if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
 }
 
+/**
+ * Carrega várias camadas configuradas, cada uma com seu próprio toggle
+ * (páginas com sub-camada, ex.: Hidrografia + Nascentes em
+ * mapas/hidrografia.html). Ajusta o zoom à união das camadas carregadas;
+ * cai para o limite municipal se nenhuma delas tiver feições.
+ */
+async function initMultiLayerPage(keys) {
+  const [limite, ...geojsons] = await Promise.all([
+    fetchGeoJSON('limite_municipal.geojson'),
+    ...keys.map((key) => fetchLayerData(key)),
+  ]);
+
+  keys.forEach((key, i) => {
+    if (geojsons[i]) addConfiguredLayer(key, geojsons[i], layerGroups[key]);
+    layerGroups[key].addTo(map);
+    bindLayerToggle(`layer-${key}`, key);
+  });
+
+  let bounds = L.featureGroup(keys.map((key) => layerGroups[key])).getBounds();
+  if (!bounds.isValid() && limite) {
+    bounds = L.geoJSON(limite).getBounds();
+  }
+  if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('layer-limite')) {
     // Mapa geral (index.html): todas as camadas, com toggle.
@@ -219,6 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
     bindLayerToggle('layer-queimadas', 'queimadas');
     bindLayerToggle('layer-desmatamento', 'desmatamento');
     bindLayerToggle('layer-urbana', 'urbana');
+  } else if (document.body.dataset.layerKeys) {
+    // Página individual com sub-camadas (ex.: hidrografia.html): uma
+    // camada por toggle, sem painel "todas as camadas".
+    initMultiLayerPage(document.body.dataset.layerKeys.split(','));
   } else if (document.body.dataset.layerKey) {
     // Página individual (mapas/*.html): uma camada só.
     initSingleLayerPage(document.body.dataset.layerKey);

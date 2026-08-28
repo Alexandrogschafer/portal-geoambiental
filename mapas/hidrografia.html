@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hidrografia — Portal Geoambiental (SEMMA)</title>
-<meta name="description" content="Mapa da rede hidrográfica de Alto Paraíso de Goiás - GO.">
+<meta name="description" content="Mapa da rede hidrográfica e das nascentes cadastradas de Alto Paraíso de Goiás - GO.">
 
 <!-- Fontes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 
 <link rel="stylesheet" href="../css/style.css">
 </head>
-<body data-page="hidrografia" data-layer-key="hidrografia" data-title="Hidrografia" data-tagline="Rede hidrográfica do município — cursos d'água mapeados">
+<body data-page="hidrografia" data-layer-keys="hidrografia,nascentes" data-title="Hidrografia" data-tagline="Rede hidrográfica e nascentes cadastradas no município">
 
 <div class="app-shell">
 
@@ -35,8 +35,14 @@
     <div class="map-section-title"><i class="fa-solid fa-water"></i> MAPA DE HIDROGRAFIA</div>
 
     <div class="content-grid" style="grid-template-columns: 1fr;">
-      <div class="map-card">
+      <div class="map-card" style="position:relative;">
         <div id="map"></div>
+
+        <div class="layers-panel">
+          <h4><i class="fa-solid fa-layer-group"></i> Camadas</h4>
+          <label><input type="checkbox" id="layer-hidrografia" checked> Hidrografia</label>
+          <label><input type="checkbox" id="layer-nascentes" checked> Nascentes</label>
+        </div>
       </div>
     </div>
 
