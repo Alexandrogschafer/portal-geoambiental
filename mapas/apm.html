@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Áreas Públicas Municipais (APM) — Portal Geoambiental (SEMMA)</title>
+<meta name="description" content="Mapa das Áreas Públicas Municipais (APM) de Alto Paraíso de Goiás - GO. Dados em levantamento.">
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="apm" data-title="Áreas Públicas Municipais (APM)" data-tagline="Praças, parques e demais áreas públicas do município">
+
+<div class="app-shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" data-partial="sidebar"></aside>
+
+  <!-- ===================== CONTEÚDO ===================== -->
+  <main class="main">
+
+    <div class="topbar" data-partial="topbar"></div>
+
+    <!-- Aviso -->
+    <div class="hero" style="grid-template-columns: 1fr; margin-bottom:20px;">
+      <div class="hero-text">
+        <h2><i class="fa-solid fa-triangle-exclamation" style="color: var(--soil);"></i> Dados em levantamento</h2>
+        <p>
+          A camada de Áreas Públicas Municipais ainda está em levantamento pela SEMMA — em breve disponível.
+          Por enquanto, o mapa abaixo mostra apenas o limite municipal como referência.
+        </p>
+      </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="map-section-title"><i class="fa-solid fa-map-location-dot"></i> MAPA DE ÁREAS PÚBLICAS MUNICIPAIS</div>
+
+    <div class="content-grid" style="grid-template-columns: 1fr;">
+      <div class="map-card">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <!-- Créditos -->
+    <div class="footer-credits">
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Realização</div>
+          <strong>SEMMA</strong>
+          <span>Secretaria Municipal de Meio Ambiente<br>Alto Paraíso de Goiás</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Idealização e Criação</div>
+          <strong>Nayara Sousa</strong>
+          <span>Bióloga | Fiscal Ambiental<br>Especialista em Geoprocessamento</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Em parceria com</div>
+          <strong>Unipampa</strong>
+          <span>Universidade Federal do Pampa</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Desenvolvimento</div>
+          <strong>Alexandro G. Schäfer</strong>
+          <span>Unipampa</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="bottom-bar">
+  <span><i class="fa-solid fa-circle-info"></i> Dados em levantamento — camada ainda não processada.</span>
+  <span>© 2026 SEMMA – Alto Paraíso de Goiás</span>
+</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // map-core.js/layers.js/partials.js referenciam caminhos relativos à
+  // raiz do site; esta página vive em mapas/, então os fetches precisam
+  // de prefixo "../".
+  window.SEMMA_BASE_PATH = '../';
+</script>
+<script src="../js/map-core.js"></script>
+<script src="../js/layers.js"></script>
+<script src="../js/partials.js"></script>
+<script>
+  // Camada ainda não processada: sem data-layer-key/data-layer-keys, então
+  // layers.js não tenta carregar nada aqui — só desenhamos o limite
+  // municipal como referência visual (o aviso acima já deixa claro, de
+  // forma visível, que os dados estão em levantamento).
+  document.addEventListener('DOMContentLoaded', async () => {
+    const limite = await fetchGeoJSON('limite_municipal.geojson');
+    if (!limite) return;
+    const bounds = L.geoJSON(limite, { style: LAYER_CONFIG.limite.style }).addTo(map).getBounds();
+    if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
+  });
+</script>
+</body>
+</html>
