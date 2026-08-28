@@ -14,7 +14,7 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 | `queimadas_AAAA.geojson` | Queimadas | MapBiomas (Coleção Fogo) | — | — | Um arquivo por ano |
 | `desmatamento_AAAA.geojson` | Desmatamento | MapBiomas (Alerta) | — | — | Um arquivo por ano |
 | `area_urbana.geojson` | Área Urbana | _(preencher)_ | — | — | |
-| `fauna_atropelada.json` | Fauna Atropelada | Cadastro SEMMA / fiscalização | — | — | |
+| `fauna_atropelada.json` | Animais Atropelada | Cadastro SEMMA / fiscalização | — | — | Nome do arquivo mantido (`fauna_atropelada.json`); label visível no site é "Animais Atropelada" |
 | `licenciamento.json` | Licenças Emitidas (histórico anual) | SEMMA | — | — | |
 | `licenciamento_pontos.geojson` | Licenciamento Ambiental — pontos | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadopt.geojson` |
 | `licenciamento_areas.geojson` | Licenciamento Ambiental — áreas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadoplg.geojson` |

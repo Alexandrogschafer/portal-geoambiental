@@ -4,7 +4,7 @@ Este arquivo orienta o Claude Code sobre as convenções deste projeto. Leia ant
 
 ## O que é o projeto
 
-Geoportal municipal estático (sem backend) para a Secretaria Municipal de Meio Ambiente (SEMMA) de Alto Paraíso de Goiás - GO. Reúne mapas interativos e indicadores ambientais (hidrografia, nascentes, unidades de conservação, queimadas, desmatamento, fauna atropelada, licenciamento, autos de infração) para consulta pública e apoio à gestão.
+Geoportal municipal estático (sem backend) para a Secretaria Municipal de Meio Ambiente (SEMMA) de Alto Paraíso de Goiás - GO. Reúne mapas interativos e indicadores ambientais (hidrografia, nascentes, unidades de conservação, queimadas, desmatamento, animais atropelados, licenciamento) para consulta pública e apoio à gestão.
 
 Publicado como site estático no GitHub Pages. Não há servidor Python em produção — todo processamento de dados acontece localmente/offline e gera arquivos estáticos (GeoJSON, JSON, CSV) que o site consome no navegador.
 
@@ -72,7 +72,7 @@ Já definidos no protótipo (`index.html`), manter consistência:
 ## Gráficos e indicadores
 
 - Usar **Chart.js** (ou Plotly.js se precisar de interatividade mais rica, como zoom/pan em séries temporais) via CDN, sem bundler.
-- Cada indicador do topo (cobertura vegetal, área queimada, nascentes, UCs, fauna atropelada, licenças, autos de infração) deve idealmente linkar para uma página/seção com o gráfico histórico correspondente, não só o número atual.
+- Cada indicador do topo (cobertura vegetal, área queimada, nascentes, UCs, animais atropelados, licenças) deve idealmente linkar para uma página/seção com o gráfico histórico correspondente, não só o número atual.
 - Dados dos gráficos ficam em `data/processed/` como JSON/CSV simples (ano, valor, fonte).
 
 ## Créditos e fontes
