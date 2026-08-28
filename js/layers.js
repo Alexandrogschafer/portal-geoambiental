@@ -189,6 +189,12 @@ async function initLayers() {
   }
 }
 
+// Licença ODbL do OpenStreetMap exige atribuição visível sempre que a
+// camada de Sistema Viário estiver ativa — usamos o controle de
+// atribuição padrão do Leaflet (já mostra a atribuição dos tiles), em
+// vez de um texto separado escondido em algum canto.
+const OSM_ATTRIBUTION = '© OpenStreetMap contributors';
+
 // ---- Toggle das checkboxes do painel "Camadas" (mapa geral) ----
 function bindLayerToggle(checkboxId, groupKey) {
   const el = document.getElementById(checkboxId);
@@ -196,8 +202,10 @@ function bindLayerToggle(checkboxId, groupKey) {
   el.addEventListener('change', () => {
     if (el.checked) {
       layerGroups[groupKey].addTo(map);
+      if (groupKey === 'viario') map.attributionControl.addAttribution(OSM_ATTRIBUTION);
     } else {
       map.removeLayer(layerGroups[groupKey]);
+      if (groupKey === 'viario') map.attributionControl.removeAttribution(OSM_ATTRIBUTION);
     }
   });
 }
@@ -254,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bindLayerToggle('layer-queimadas', 'queimadas');
     bindLayerToggle('layer-desmatamento', 'desmatamento');
     bindLayerToggle('layer-urbana', 'urbana');
+    bindLayerToggle('layer-viario', 'viario');
   } else if (document.getElementById('map')) {
     // Página individual (mapas/*.html): contorno municipal sempre, mais
     // a(s) camada(s) de dados da página, se declaradas.
