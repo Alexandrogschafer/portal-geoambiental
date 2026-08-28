@@ -19,9 +19,6 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 | `licenciamento_pontos.geojson` | Licenciamento Ambiental — pontos | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadopt.geojson` |
 | `licenciamento_areas.geojson` | Licenciamento Ambiental — áreas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadoplg.geojson` |
 | `licenciamento_linhas.geojson` | Licenciamento Ambiental — linhas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadolinha.geojson` |
-| `autos_infracao.json` | Autos de Infração (histórico anual) | SEMMA / fiscalização | — | — | |
-| `autos_infracao_areas.geojson` | Autos de Infração — áreas | SEMAD/SEMA-GO (fiscalização estadual) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autoinfrac_a_o_estadoplg.gpkg`. Texto de `categoria`/`nome` corrigido por transcrição manual (mojibake irreversível na origem). Campo `autuado` omitido para pessoa física — ver seção "Privacidade" abaixo |
-| `autos_infracao_pontos.geojson` | Autos de Infração — pontos | SEMAD/SEMA-GO (fiscalização estadual) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autoinfrac_a_o_estadopt.gpkg`. Campo `autuado` omitido para pessoa física — ver seção "Privacidade" abaixo |
 | `supressao_vegetal.geojson` | Autorizações de Supressão de Vegetação | SEMAD/SEMA-GO (licenciamento estadual, sistema IPÊ) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autorizac_a_osupressa_oveg_alto.gpkg`. Encoding (mojibake) corrigido |
 | `cobertura_vegetal.json` | Cobertura Vegetal Nativa (%) | MapBiomas (Coleção de Cobertura e Uso) | — | — | |
 
@@ -31,6 +28,6 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 - Sempre que um dado vier do MapBiomas, manter o crédito "Fonte: MapBiomas" visível no card/indicador correspondente na UI.
 - Ao reprocessar uma camada (nova simplificação, correção de atributos etc.), atualizar a coluna "Última atualização no site" mesmo que a fonte original não tenha mudado.
 
-## Privacidade
+## Removido do escopo
 
-- `autos_infracao_areas.geojson` / `autos_infracao_pontos.geojson`: o campo bruto `nome_razao` mistura pessoa física e pessoa jurídica/órgão público, e um registro da fonte trazia um CPF colado ao nome. Por decisão de privacidade, o campo `autuado` só é publicado quando `scripts/process_gpkg_layers.py` reconhece um marcador de pessoa jurídica ou órgão público (LTDA, EIRELI, S/A, EPP, HOLDING, INSTITUTO, AGENCIA, PREFEITURA, MUNICÍPIO, "- ME"); nome de pessoa física fica de fora do popup público, aparecendo só a infração, o processo, a data e o status. Reavaliar esse critério (ou a lista de marcadores) sempre que a fonte for reprocessada.
+- Autos de Infração (`autos_infracao.json`, `autos_infracao_areas.geojson`, `autos_infracao_pontos.geojson`) saiu definitivamente do portal — ver CLAUDE.md. Os shapefiles brutos (`data/raw/autoinfrac_a_o_estadoplg.geojson`, `data/raw/autoinfrac_a_o_estadopt.geojson`) foram mantidos em `data/raw/` apenas como referência histórica; nada em `data/processed/` ou no site referencia mais essa camada.
