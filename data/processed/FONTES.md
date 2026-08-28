@@ -21,11 +21,13 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 | `licenciamento_linhas.geojson` | Licenciamento Ambiental — linhas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadolinha.geojson` |
 | `supressao_vegetal.geojson` | Autorizações de Supressão de Vegetação | SEMAD/SEMA-GO (licenciamento estadual, sistema IPÊ) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autorizac_a_osupressa_oveg_alto.gpkg`. Encoding (mojibake) corrigido. Sem mapa próprio: listado como tabela em `fiscalizacao-ambiental.html` (módulo Fiscalização Ambiental) |
 | `cobertura_vegetal.json` | Cobertura Vegetal Nativa (%) | MapBiomas (Coleção de Cobertura e Uso) | — | — | |
+| `sistema_viario.geojson` | Sistema Viário Municipal | OpenStreetMap contributors | 2026-08-27 | 2026-08-27 | Extraído via `scripts/extract_osm_viario.py` (`osmnx.graph_from_polygon`, `network_type='drive'`), recortado pelo limite municipal. 2410 segmentos — residential (1166), unclassified (880), tertiary (192), primary (158), primary_link (10), tertiary_link (4). **Licença ODbL — atribuição "© OpenStreetMap contributors" obrigatória sempre que a camada estiver visível** (ver seção "Convenções" abaixo); implementada via `map.attributionControl` do Leaflet em `js/layers.js` |
 
 ## Convenções
 
 - Datas no formato `AAAA-MM-DD`.
 - Sempre que um dado vier do MapBiomas, manter o crédito "Fonte: MapBiomas" visível no card/indicador correspondente na UI.
+- Sempre que um dado vier do OpenStreetMap (licença ODbL), manter o crédito "© OpenStreetMap contributors" visível enquanto a camada estiver ativa — não é opcional, é exigência da licença.
 - Ao reprocessar uma camada (nova simplificação, correção de atributos etc.), atualizar a coluna "Última atualização no site" mesmo que a fonte original não tenha mudado.
 
 ## Removido do escopo

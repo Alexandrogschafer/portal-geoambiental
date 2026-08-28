@@ -61,6 +61,7 @@ Cada camada do painel "Camadas" (`LAYER_CONFIG` em `js/layers.js`) segue este pa
 | Desmatamento | polígono | vermelho `#e63946` | `desmatamento_AAAA.geojson` | Página própria: `mapas/desmatamento.html` |
 | Animais Atropelada | ponto (planejado) | marrom `--soil: #8a5a3c` | `fauna_atropelada.json` (indicador; camada de pontos ainda não processada) | Página própria: `mapas/fauna-atropelada.html`. Nome do arquivo mantido por compatibilidade — só a label visível mudou de "Fauna Atropelada" |
 | Áreas Públicas Municipais (APM) | a definir | a definir | ainda não processado | Página `mapas/apm.html` existe, mas mostra apenas mapa base + limite municipal com aviso "Dados em levantamento" até o GeoJSON ser processado |
+| Sistema Viário | linha | cinza-escuro `#4a4a4a` | `sistema_viario.geojson` | Fonte: OpenStreetMap contributors, extraído via `osmnx` (`scripts/extract_osm_viario.py`) — licença ODbL, exige atribuição visível ("© OpenStreetMap contributors") sempre que a camada estiver ativa (ver `data/processed/FONTES.md`). Página própria: `mapas/sistema-viario.html`. Desligada por padrão no mapa geral (2410 segmentos poluiriam a visualização) |
 | Licenciamento Ambiental | ponto/linha/polígono | âmbar `#c99a3c` | `licenciamento_{pontos,linhas,areas}.geojson` | Página própria: `mapas/licenciamento.html` |
 | APPs | polígono | amarelo `#c99a3c` | `apps.geojson` | Ainda não tem página própria nem item de menu — só carregada no mapa geral (`index.html`) |
 | Área Urbana | polígono | cinza | `area_urbana.geojson` | Ainda não tem página própria nem item de menu — só carregada no mapa geral (`index.html`) |
@@ -69,7 +70,7 @@ Camadas novas devem seguir o mesmo padrão: entrada na tabela acima, checkbox no
 
 ## Estrutura de navegação (menu)
 
-**Mapas Interativos** (`mapas/*.html`, nesta ordem no menu): Mapa Geral, Unidades de Conservação, Hidrografia (com Nascentes como sub-camada), Virada Ambiental, Queimadas, Desmatamento, Animais Atropelada, Áreas Públicas Municipais (APM), Licenciamento Ambiental.
+**Mapas Interativos** (`mapas/*.html`, nesta ordem no menu): Mapa Geral, Unidades de Conservação, Hidrografia (com Nascentes como sub-camada), Virada Ambiental, Queimadas, Desmatamento, Animais Atropelada, Áreas Públicas Municipais (APM), Sistema Viário, Licenciamento Ambiental.
 
 **Módulos** (páginas fora de `mapas/`, não são mapas espaciais): Indicadores Ambientais, Fiscalização Ambiental (`fiscalizacao-ambiental.html` — formulário de denúncia ambiental, contatos da SEMMA e tabela de Autorizações de Supressão de Vegetação reaproveitando `data/processed/supressao_vegetal.geojson`), Conservação Ambiental, Biblioteca Técnica, Sobre a Plataforma. A maioria ainda são placeholders vazios na sidebar (`partials/sidebar.html`), a preencher em fases futuras.
 
