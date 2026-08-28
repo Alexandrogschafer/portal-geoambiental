@@ -87,7 +87,7 @@ const LAYER_CONFIG = {
   viario: {
     file: 'sistema_viario.geojson',
     type: 'line',
-    style: { color: '#4a4a4a', weight: 2 },
+    style: { color: '#e63946', weight: 2 },
     popupFields: ['name', 'highway'],
   },
 };

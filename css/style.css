@@ -24,7 +24,7 @@
   --amber: #c99a3c;       /* licenciamento / autos / APPs */
   --violet: #7a5ea8;      /* indicadores institucionais */
   --conservation: #6fb178;/* unidades de conservação */
-  --road: #4a4a4a;        /* sistema viário municipal */
+  --road: #e63946;        /* sistema viário municipal (mesmo tom do --deforest) */
   --danger: #b3382c;
 
   /* Neutros / UI */
