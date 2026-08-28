@@ -332,6 +332,37 @@ a { color: inherit; }
 .icon.bg-amber   { background: #f5ecd9; color: var(--amber); }
 .icon.bg-violet  { background: #ece7f4; color: var(--violet); }
 
+/* Tabela de dados simples (ex.: Fiscalização Ambiental) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.data-table th {
+  color: var(--forest-800);
+  font-weight: 700;
+  background: var(--forest-100);
+  position: sticky;
+  top: 0;
+}
+
+.data-table tbody tr:hover { background: var(--sand-50); }
+
+.table-meta {
+  color: var(--ink-400);
+  font-size: 12.5px;
+  margin: 0 0 12px;
+}
+
 /* Rodapé institucional */
 .footer-credits {
   margin-top: 28px;

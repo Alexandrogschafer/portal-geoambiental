@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiscalização Ambiental — Portal Geoambiental (SEMMA)</title>
+<meta name="description" content="Denúncia ambiental, contatos da fiscalização e autorizações de supressão de vegetação de Alto Paraíso de Goiás - GO.">
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="fiscalizacao-ambiental" data-title="Fiscalização Ambiental" data-tagline="Denúncia ambiental, contatos e autorizações de supressão de vegetação">
+
+<div class="app-shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" data-partial="sidebar"></aside>
+
+  <!-- ===================== CONTEÚDO ===================== -->
+  <main class="main">
+
+    <div class="topbar" data-partial="topbar"></div>
+
+    <!-- Denúncia + Contatos -->
+    <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
+
+      <div class="map-card" style="padding:24px;">
+        <h3 style="display:flex; align-items:center; gap:8px; font-size:17px; margin-bottom:10px;">
+          <i class="fa-solid fa-triangle-exclamation" style="color: var(--amber);"></i> Denúncia Ambiental
+        </h3>
+        <p style="color:var(--ink-600); font-size:14px; line-height:1.6;">
+          Identificou desmatamento irregular, queimada, poluição ou outro problema ambiental?
+          Registre sua denúncia através do formulário oficial da SEMMA.
+        </p>
+        <!-- TODO: substituir pelo link oficial do formulário de denúncia da SEMMA -->
+        <a class="btn" href="#" target="_blank" rel="noopener" style="margin-top:8px;">
+          <i class="fa-solid fa-file-circle-exclamation"></i> Fazer denúncia
+        </a>
+      </div>
+
+      <div class="map-card" style="padding:24px;">
+        <h3 style="display:flex; align-items:center; gap:8px; font-size:17px; margin-bottom:10px;">
+          <i class="fa-solid fa-address-book" style="color: var(--forest-600);"></i> Contatos
+        </h3>
+        <!-- TODO: substituir pelos contatos reais da SEMMA (telefone, e-mail, endereço, horário de atendimento) -->
+        <p style="color:var(--ink-600); font-size:14px; line-height:1.8;">
+          <i class="fa-solid fa-phone" style="width:16px; color:var(--ink-400);"></i> (00) 0000-0000<br>
+          <i class="fa-solid fa-envelope" style="width:16px; color:var(--ink-400);"></i> fiscalizacao@altoparaiso.go.gov.br<br>
+          <i class="fa-solid fa-location-dot" style="width:16px; color:var(--ink-400);"></i> Endereço a definir<br>
+          <i class="fa-solid fa-clock" style="width:16px; color:var(--ink-400);"></i> Horário de atendimento a definir
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Autorizações de Supressão de Vegetação -->
+    <div class="map-section-title" style="margin-top:24px;">
+      <i class="fa-solid fa-scissors"></i> AUTORIZAÇÕES DE SUPRESSÃO DE VEGETAÇÃO
+    </div>
+
+    <div class="map-card" style="padding:20px;">
+      <p id="fiscalizacao-contagem" class="table-meta">Carregando registros…</p>
+      <div style="overflow-x:auto; max-height:520px;">
+        <table class="data-table" id="tabela-supressao">
+          <thead>
+            <tr>
+              <th>Nº do processo</th>
+              <th>Tipo de licença</th>
+              <th>Atividade</th>
+              <th>Criação</th>
+              <th>Emissão</th>
+              <th>Validade</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-supressao-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Créditos -->
+    <div class="footer-credits">
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Realização</div>
+          <strong>SEMMA</strong>
+          <span>Secretaria Municipal de Meio Ambiente<br>Alto Paraíso de Goiás</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Idealização e Criação</div>
+          <strong>Nayara Sousa</strong>
+          <span>Bióloga | Fiscal Ambiental<br>Especialista em Geoprocessamento</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Em parceria com</div>
+          <strong>Unipampa</strong>
+          <span>Universidade Federal do Pampa</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Desenvolvimento</div>
+          <strong>Alexandro G. Schäfer</strong>
+          <span>Unipampa</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="bottom-bar">
+  <span><i class="fa-solid fa-circle-info"></i> Autorizações de supressão: SEMAD/SEMA-GO (licenciamento estadual, sistema IPÊ), filtradas para o município.</span>
+  <span>© 2026 SEMMA – Alto Paraíso de Goiás</span>
+</div>
+
+<script src="js/fiscalizacao.js"></script>
+<script src="js/partials.js"></script>
+</body>
+</html>
