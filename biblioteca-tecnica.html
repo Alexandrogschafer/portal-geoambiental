@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca Técnica — Portal Geoambiental (SEMMA)</title>
+<meta name="description" content="Documentos técnicos, dados, legislação e materiais de referência da SEMMA de Alto Paraíso de Goiás - GO.">
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="biblioteca-tecnica" data-title="Biblioteca Técnica" data-tagline="Documentos, dados e referências técnicas da gestão ambiental municipal">
+
+<div class="app-shell">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" data-partial="sidebar"></aside>
+
+  <!-- ===================== CONTEÚDO ===================== -->
+  <main class="main">
+
+    <div class="topbar" data-partial="topbar"></div>
+
+    <div class="card-grid">
+
+      <!-- Banco de Dados -->
+      <div class="map-card" style="padding:22px;">
+        <div class="card-header">
+          <div class="icon bg-forest"><i class="fa-solid fa-database"></i></div>
+          <div>
+            <h3>Banco de Dados</h3>
+            <p>Bases de dados brutas e conjuntos geoespaciais utilizados na gestão ambiental do município.</p>
+          </div>
+        </div>
+        <div data-biblioteca-lista="banco-de-dados"></div>
+      </div>
+
+      <!-- Pareceres Técnicos -->
+      <div class="map-card" style="padding:22px;">
+        <div class="card-header">
+          <div class="icon bg-amber"><i class="fa-solid fa-file-signature"></i></div>
+          <div>
+            <h3>Pareceres Técnicos</h3>
+            <p>Pareceres técnicos emitidos pela SEMMA para processos de licenciamento, autorização e fiscalização.</p>
+          </div>
+        </div>
+        <div data-biblioteca-lista="pareceres-tecnicos"></div>
+      </div>
+
+      <!-- Legislação e Normas -->
+      <div class="map-card" style="padding:22px;">
+        <div class="card-header">
+          <div class="icon bg-violet"><i class="fa-solid fa-gavel"></i></div>
+          <div>
+            <h3>Legislação e Normas</h3>
+            <p>Leis, decretos e resoluções municipais, estaduais e federais aplicáveis à gestão ambiental.</p>
+          </div>
+        </div>
+        <div data-biblioteca-lista="legislacao-normas"></div>
+      </div>
+
+      <!-- Estudos e Publicações -->
+      <div class="map-card" style="padding:22px;">
+        <div class="card-header">
+          <div class="icon bg-water"><i class="fa-solid fa-book-open"></i></div>
+          <div>
+            <h3>Estudos e Publicações</h3>
+            <p>Estudos técnicos, diagnósticos ambientais e publicações produzidas ou reunidas pela SEMMA.</p>
+          </div>
+        </div>
+        <div data-biblioteca-lista="estudos-publicacoes"></div>
+      </div>
+
+      <!-- Manuais e Referências -->
+      <div class="map-card" style="padding:22px;">
+        <div class="card-header">
+          <div class="icon bg-soil"><i class="fa-solid fa-clipboard-list"></i></div>
+          <div>
+            <h3>Manuais e Referências</h3>
+            <p>Manuais técnicos, guias de procedimento e materiais de referência para consulta interna e externa.</p>
+          </div>
+        </div>
+        <div data-biblioteca-lista="manuais-referencias"></div>
+      </div>
+
+    </div>
+
+    <!-- Créditos -->
+    <div class="footer-credits">
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Realização</div>
+          <strong>SEMMA</strong>
+          <span>Secretaria Municipal de Meio Ambiente<br>Alto Paraíso de Goiás</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Idealização e Criação</div>
+          <strong>Nayara Sousa</strong>
+          <span>Bióloga | Fiscal Ambiental<br>Especialista em Geoprocessamento</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Em parceria com</div>
+          <strong>Unipampa</strong>
+          <span>Universidade Federal do Pampa</span>
+        </div>
+      </div>
+      <div class="credit-block">
+        <div class="avatar"></div>
+        <div>
+          <div class="title">Desenvolvimento</div>
+          <strong>Alexandro G. Schäfer</strong>
+          <span>Unipampa</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="bottom-bar">
+  <span><i class="fa-solid fa-circle-info"></i> Seção em estruturação — documentos serão publicados conforme disponibilizados pela SEMMA.</span>
+  <span>© 2026 SEMMA – Alto Paraíso de Goiás</span>
+</div>
+
+<script src="js/biblioteca.js"></script>
+<script src="js/partials.js"></script>
+</body>
+</html>
