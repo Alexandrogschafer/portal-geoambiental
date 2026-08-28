@@ -9,3 +9,6 @@ Thumbs.db
 # Editor
 .vscode/
 *.swp
+
+# Cache local do osmnx (respostas da Overpass API) — scripts/extract_osm_viario.py
+cache/
