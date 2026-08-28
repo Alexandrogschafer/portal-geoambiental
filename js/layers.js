@@ -26,6 +26,8 @@ const FIELD_LABELS = {
   AREAHA: 'Área (ha)',
   ano: 'Ano',
   area_ha: 'Área (ha)',
+  name: 'Via',
+  highway: 'Tipo de via',
 };
 
 // Contorno branco grosso em volta de cada polígono/linha — sem isso, o
@@ -81,6 +83,12 @@ const LAYER_CONFIG = {
     file: 'area_urbana.geojson',
     type: 'polygon',
     style: { color: '#ffffff', weight: HALO_WEIGHT, fillColor: '#7c877e', fillOpacity: 0.4 },
+  },
+  viario: {
+    file: 'sistema_viario.geojson',
+    type: 'line',
+    style: { color: '#4a4a4a', weight: 2 },
+    popupFields: ['name', 'highway'],
   },
 };
 
