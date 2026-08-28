@@ -19,7 +19,7 @@ Atualizar sempre que um dado for adicionado, reprocessado ou substituído.
 | `licenciamento_pontos.geojson` | Licenciamento Ambiental — pontos | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadopt.geojson` |
 | `licenciamento_areas.geojson` | Licenciamento Ambiental — áreas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadoplg.geojson` |
 | `licenciamento_linhas.geojson` | Licenciamento Ambiental — linhas | SEMAD/SEMA-GO (licenciamento estadual) | — | — | Gerado por `scripts/process_licenciamento.py` a partir de `data/raw/licenc_aambiental_estadolinha.geojson` |
-| `supressao_vegetal.geojson` | Autorizações de Supressão de Vegetação | SEMAD/SEMA-GO (licenciamento estadual, sistema IPÊ) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autorizac_a_osupressa_oveg_alto.gpkg`. Encoding (mojibake) corrigido |
+| `supressao_vegetal.geojson` | Autorizações de Supressão de Vegetação | SEMAD/SEMA-GO (licenciamento estadual, sistema IPÊ) | — | — | Gerado por `scripts/process_gpkg_layers.py` a partir de `data/raw/gpkg/autorizac_a_osupressa_oveg_alto.gpkg`. Encoding (mojibake) corrigido. Sem mapa próprio: listado como tabela em `fiscalizacao-ambiental.html` (módulo Fiscalização Ambiental) |
 | `cobertura_vegetal.json` | Cobertura Vegetal Nativa (%) | MapBiomas (Coleção de Cobertura e Uso) | — | — | |
 
 ## Convenções
