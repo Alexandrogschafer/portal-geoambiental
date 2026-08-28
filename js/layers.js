@@ -243,6 +243,13 @@ async function initIndividualMapPage(keys) {
     if (keys.length > 1) bindLayerToggle(`layer-${key}`, key);
   });
 
+  // Sistema Viário: sem toggle nesta página (é a única camada), então o
+  // crédito do OSM precisa ser adicionado direto — bindLayerToggle() só
+  // cuida disso quando há um checkbox por trás.
+  if (keys.includes('viario') && keys.length === 1) {
+    map.attributionControl.addAttribution(OSM_ATTRIBUTION);
+  }
+
   let bounds = L.featureGroup(keys.map((key) => layerGroups[key])).getBounds();
   if (!bounds.isValid() && limite) {
     bounds = L.geoJSON(limite).getBounds();
